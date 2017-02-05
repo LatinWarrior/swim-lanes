@@ -213,31 +213,53 @@ function init() {
                     fill: "white",
                     stroke: '#CCCCCC'
                 }),
-                $(go.Panel, "Table", {
-                    width: 120,
-                    minSize: new go.Size(NaN, 50),
-                    margin: new go.Margin(6, 10, 0, 3),
-                    defaultAlignment: go.Spot.Left
-                },
-                $(go.RowColumnDefinition, { column: 2, width: 4 }),
-                $(go.TextBlock, textStyle(),  // the name
-                {
-                    row: 0, column: 0, columnSpan: 5,
-                    font: font14,
-                    editable: true, isMultiline: false,
-                    minSize: new go.Size(10, 16)
-                },
-              new go.Binding("text", "name").makeTwoWay()),
-                $(go.TextBlock, {
-                    name: 'TEXT',
-                    margin: 6,
-                    font: font14,
-                    editable: true,
-                    stroke: "#000",
-                    maxSize: new go.Size(130, NaN),
-                    alignment: go.Spot.TopLeft
-                },
+                $(go.Panel, "Table", 
+                    {
+                        width: 120,
+                        minSize: new go.Size(NaN, 50),
+                        margin: new go.Margin(6, 10, 0, 3),
+                        defaultAlignment: go.Spot.Left
+                    },
+                    $(go.RowColumnDefinition, { column: 2, width: 4 }
+                ),                
+                $(go.TextBlock, 
+                    {
+                        row: 0, 
+                        column: 0,
+                        name: 'TEXT',
+                        margin: 6,
+                        font: font14,
+                        editable: true,
+                        stroke: "#000",
+                        maxSize: new go.Size(130, NaN),
+                        alignment: go.Spot.TopLeft
+                    },
                     new go.Binding("text", "text").makeTwoWay())
+                ),
+                $(go.TextBlock, textStyle(),  // the name
+                    {
+                        row: 1, 
+                        column: 0, 
+                        columnSpan: 5,
+                        font: font14,
+                        editable: true, isMultiline: false,
+                        minSize: new go.Size(10, 16)
+                    },
+                    new go.Binding("text", "name").makeTwoWay()
+                ),
+               $(go.TextBlock, textStyle(),
+                    { 
+                        row: 2, 
+                        column: 0 
+                    },
+                    new go.Binding("text", "key", function(v) {return "id: " + v;})
+                ),
+                $(go.TextBlock, textStyle(),
+                    { 
+                        row: 3, 
+                        column: 0 
+                    },
+                    new go.Binding("text", "index", function(v) {return "index: " + v;})
                 )
             )
         );
@@ -446,7 +468,8 @@ function init() {
         type: "PP",
         stroke: '#009CCC',
         source: "cat1.png",
-        index: "-1"
+        index: "-1",
+        name: "TBD"
     }, {
         key: "tt",
         text: "TT...",
@@ -455,7 +478,8 @@ function init() {
         type: "TT",
         stroke: '#009CCC',
         source: "cat2.png",
-        "index": "-1"
+        "index": "-1",
+        name: "TBD"
     }, {
         key: "sc",
         text: "Scan...",
@@ -464,7 +488,8 @@ function init() {
         type: "SC",
         stroke: '#009CCC',
         source: "cat3.png",
-        index: "-1"
+        index: "-1",
+        name: "TBD"
     }]);
 
     // initialize the left Legend
