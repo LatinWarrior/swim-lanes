@@ -381,7 +381,7 @@ function init() {
         //"loc": "0 23.52284749830794"
     }, {
         "key": "left",
-        "text": "Left Only",
+        "text": "Execute Left Only",
         "isGroup": true,
         "color": darkBlue,
         "size": laneSize//,
@@ -389,7 +389,7 @@ function init() {
         //"loc": "109 23.52284749830794"
     }, {
         "key": "Identified",
-        "text": "Both Left and Right",
+        "text": "Execute Left and Right",
         "isGroup": true,
         "size": laneSize,
         "color": darkBlue//,
@@ -397,7 +397,7 @@ function init() {
     },
     {
         "key": "right",
-        "text": "Right Only",
+        "text": "Execute Right Only",
         "isGroup": true,
         "color": darkBlue,
         "size": laneSize//,
