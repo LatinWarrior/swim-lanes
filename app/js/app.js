@@ -18,6 +18,12 @@ var font15 = "15px Arial, Helvetica, sans-serif";
 
 // some shared functions
 
+// This function provides a common style for most of the TextBlocks.
+    // Some of these values may be overridden in a particular TextBlock.
+    function textStyle() {
+      return { font: font14, stroke: "white" };
+    }
+
 // this is called after nodes have been moved
 function relayoutDiagram() {
     myDiagram.selection.each(function (n) {
@@ -106,7 +112,7 @@ function init() {
 
     var $ = go.GraphObject.make;
 
-    debugger;
+    // debugger;
 
     myDiagram =
         $(go.Diagram, "centerDiagram", {
@@ -180,7 +186,7 @@ function init() {
                 mouseEnter: mouseEnter,
                 mouseLeave: mouseLeave
             },
-            new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+            // new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
             $(go.Shape, "Rectangle", {
                 fill: '#009CCC',
                 strokeWidth: 2,
@@ -209,18 +215,29 @@ function init() {
                 }),
                 $(go.Panel, "Table", {
                     width: 120,
-                    minSize: new go.Size(NaN, 50)
+                    minSize: new go.Size(NaN, 50),
+                    margin: new go.Margin(6, 10, 0, 3),
+                    defaultAlignment: go.Spot.Left
                 },
-                    $(go.TextBlock, {
-                        name: 'TEXT',
-                        margin: 6,
-                        font: font14,
-                        editable: true,
-                        stroke: "#000",
-                        maxSize: new go.Size(130, NaN),
-                        alignment: go.Spot.TopLeft
-                    },
-                        new go.Binding("text", "text").makeTwoWay())
+                $(go.RowColumnDefinition, { column: 2, width: 4 }),
+                $(go.TextBlock, textStyle(),  // the name
+                {
+                    row: 0, column: 0, columnSpan: 5,
+                    font: font14,
+                    editable: true, isMultiline: false,
+                    minSize: new go.Size(10, 16)
+                },
+              new go.Binding("text", "name").makeTwoWay()),
+                $(go.TextBlock, {
+                    name: 'TEXT',
+                    margin: 6,
+                    font: font14,
+                    editable: true,
+                    stroke: "#000",
+                    maxSize: new go.Size(130, NaN),
+                    alignment: go.Spot.TopLeft
+                },
+                    new go.Binding("text", "text").makeTwoWay())
                 )
             )
         );
@@ -315,7 +332,7 @@ function init() {
                 }
             }
         },
-            new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+            // new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
             new go.Binding("isSubGraphExpanded", "expanded").makeTwoWay(),
             // the lane header consisting of a TextBlock and an expander button
             $(go.Panel, "Horizontal", {
@@ -507,7 +524,7 @@ function init() {
         );
 
     // Set up a Part as a legend, and place it directly on the diagram
-    rightLegend.model = new go.GraphLinksModel(table);
+    // rightLegend.model = new go.GraphLinksModel(table);
 
     // load();
 
