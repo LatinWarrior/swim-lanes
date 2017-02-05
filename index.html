@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Swim Lanes</title>
-    <meta name="description"
-          content="An interactive Kanban board editor, a visual control used for organizing work items."/>
-    <meta name="description"/>
+    <meta name="description" content="Swim lanes." />
+    <meta name="description" />
     <meta charset="UTF-8">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
 
@@ -18,30 +18,25 @@
     <h3>Swim Lanes </h3>
 
     <div class="row">
-        <div id="leftPalette" class="col-md-2" style="border: solid 1px black; height: 400px">
-        </div>
+        <div id="leftPalette" class="col-md-2" style="border: solid 1px black; height: 400px"></div>
         <div id="centerDiagram" class="col-md-9" style="border: solid 1px black; height: 400px"></div>
-        <div id="rightLegend" class="col-md-1" style="border: solid 1px black; height: 400px">
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <textarea id="savedModel" style="width:100%;height:100px">
-{ "class": "go.GraphLinksModel",
-  "nodeDataArray": [
-                    <!-- Nodes are added here -->
-],
-  "linkDataArray": []}
-  </textarea>
-            </div>
-        </div>
-
+        <div id="rightLegend" class="col-md-1" style="border: solid 1px black; height: 400px"></div>
     </div>
-    <script src="node_modules/gojs/release/go-debug.js"></script>
-    <script src="node_modules/jquery/dist/jquery.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="node_modules/angular/angular.js"></script>
-    <!--<script src="node_modules/angular-bootstrap/ui-bootstrap-tpls.js"></script>-->
-    <script src="app/js/app.js"></script>
+    <div class="row">
+        <div class="col-md-12">
+            <textarea id="savedModel" style="width:100%;height:100px"> { "class": "go.GraphLinksModel", "nodeDataArray": [], "linkDataArray": []}
+            </textarea>
+        </div>
+    </div>
+</div>
+<script src="node_modules/gojs/release/go-debug.js"></script>
+<script src="node_modules/jquery/dist/jquery.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+<script src="node_modules/angular/angular.js"></script>
+<!--<script src="node_modules/angular-bootstrap/ui-bootstrap-tpls.js"></script>-->
+<script src="app/js/app.js"></script>
+
 
 </body>
+
 </html>

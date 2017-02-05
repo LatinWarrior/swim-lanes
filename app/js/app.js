@@ -19,7 +19,7 @@ var font15 = "15px Arial, Helvetica, sans-serif";
 
 // this is called after nodes have been moved
 function relayoutDiagram() {
-    myDiagram.selection.each(function(n) {
+    myDiagram.selection.each(function (n) {
         n.invalidateLayout();
     });
     myDiagram.layoutDiagram();
@@ -28,7 +28,7 @@ function relayoutDiagram() {
 // compute the minimum size of the whole diagram needed to hold all of the Lane Groups
 function computeMinPoolSize() {
     var len = MINLENGTH;
-    myDiagram.findTopLevelGroups().each(function(lane) {
+    myDiagram.findTopLevelGroups().each(function (lane) {
         var holder = lane.placeholder;
         if (holder !== null) {
             var sz = holder.actualBounds;
@@ -77,13 +77,13 @@ function PoolLayout() {
 go.Diagram.inherit(PoolLayout, go.GridLayout);
 
 /** @override */
-PoolLayout.prototype.doLayout = function(coll) {
+PoolLayout.prototype.doLayout = function (coll) {
     var diagram = this.diagram;
     if (diagram === null) return;
     diagram.startTransaction("PoolLayout");
     // make sure all of the Group Shapes are big enough
     var minsize = computeMinPoolSize();
-    diagram.findTopLevelGroups().each(function(lane) {
+    diagram.findTopLevelGroups().each(function (lane) {
         if (!(lane instanceof go.Group)) return;
         var shape = lane.selectionObject;
         if (shape !== null) { // change the desiredSize to be big enough in both directions
@@ -105,6 +105,8 @@ function init() {
 
     var $ = go.GraphObject.make;
 
+    debugger;
+
     myDiagram =
         $(go.Diagram, "centerDiagram", {
             // start everything in the middle of the viewport
@@ -113,7 +115,7 @@ function init() {
             layout: $(PoolLayout),
             allowDrop: true,
             // disallow nodes to be dragged to the diagram's background
-            mouseDrop: function(e) {
+            mouseDrop: function (e) {
                 e.diagram.currentTool.doCancel();
             },
             // a clipboard copied node is pasted into the original node's group (i.e. lane).
@@ -123,7 +125,7 @@ function init() {
             "SelectionCopied": relayoutDiagram, // defined above
             "animationManager.isEnabled": false,
             "undoManager.isEnabled": true,
-            "ModelChanged": function(e) {
+            "ModelChanged": function (e) {
                 if (e.isTransactionFinished) {
                     document.getElementById(saveModel).textContent = myDiagram.model.toJson();
                 }
@@ -132,13 +134,13 @@ function init() {
 
     // Customize the dragging tool:
     // When dragging a Node set its opacity to 0.7 and move it to the foreground layer
-    myDiagram.toolManager.draggingTool.doActivate = function() {
+    myDiagram.toolManager.draggingTool.doActivate = function () {
         go.DraggingTool.prototype.doActivate.call(this);
         this.currentPart.opacity = 0.7;
         this.currentPart.layerName = "Foreground";
     };
 
-    myDiagram.toolManager.draggingTool.doDeactivate = function() {
+    myDiagram.toolManager.draggingTool.doDeactivate = function () {
         this.currentPart.opacity = 1;
         this.currentPart.layerName = "";
         go.DraggingTool.prototype.doDeactivate.call(this);
@@ -179,23 +181,23 @@ function init() {
             },
             new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
             $(go.Shape, "Rectangle", {
-                    fill: '#009CCC',
-                    strokeWidth: 2,
-                    name: "LEFT_RECT",
-                    stroke: '#009CCC',
-                    width: 8,
-                    stretch: go.GraphObject.Vertical,
-                    alignment: go.Spot.Left,
-                    // if a user clicks the colored portion of a node, cycle through colors
-                    click: function(e, obj) {
-                        console.log('Clicked on colored node.')
-                        // myDiagram.startTransaction("Update node color");
-                        // var newColor = parseInt(obj.part.data.color) + 1;
-                        // if (newColor > noteColors.length-1) newColor = 0;
-                        // myDiagram.model.setDataProperty(obj.part.data, "color", newColor);
-                        // myDiagram.commitTransaction("Update node color");
-                    }
-                },
+                fill: '#009CCC',
+                strokeWidth: 2,
+                name: "LEFT_RECT",
+                stroke: '#009CCC',
+                width: 8,
+                stretch: go.GraphObject.Vertical,
+                alignment: go.Spot.Left,
+                // if a user clicks the colored portion of a node, cycle through colors
+                click: function (e, obj) {
+                    console.log('Clicked on colored node.')
+                    // myDiagram.startTransaction("Update node color");
+                    // var newColor = parseInt(obj.part.data.color) + 1;
+                    // if (newColor > noteColors.length-1) newColor = 0;
+                    // myDiagram.model.setDataProperty(obj.part.data, "color", newColor);
+                    // myDiagram.commitTransaction("Update node color");
+                }
+            },
                 new go.Binding("fill", "color", getNoteColor),
                 new go.Binding("stroke", "color", getNoteColor)
             ),
@@ -205,18 +207,18 @@ function init() {
                     stroke: '#CCCCCC'
                 }),
                 $(go.Panel, "Table", {
-                        width: 120,
-                        minSize: new go.Size(NaN, 50)
-                    },
+                    width: 120,
+                    minSize: new go.Size(NaN, 50)
+                },
                     $(go.TextBlock, {
-                            name: 'TEXT',
-                            margin: 6,
-                            font: font14,
-                            editable: true,
-                            stroke: "#000",
-                            maxSize: new go.Size(130, NaN),
-                            alignment: go.Spot.TopLeft
-                        },
+                        name: 'TEXT',
+                        margin: 6,
+                        font: font14,
+                        editable: true,
+                        stroke: "#000",
+                        maxSize: new go.Size(130, NaN),
+                        alignment: go.Spot.TopLeft
+                    },
                         new go.Binding("text", "text").makeTwoWay())
                 )
             )
@@ -263,63 +265,63 @@ function init() {
 
     myDiagram.groupTemplate =
         $(go.Group, "Vertical", {
-                copyable: false,
-                movable: false,
-                deletable: false,
-                selectionAdorned: false,
-                selectionObjectName: "SHAPE", // even though its not selectable, this is used in the layout
-                layerName: "Background", // all lanes are always behind all nodes and links
-                layout: $(go.GridLayout, // automatically lay out the lane's subgraph
-                    {
-                        wrappingColumn: 1,
-                        cellSize: new go.Size(1, 1),
-                        spacing: new go.Size(5, 5),
-                        alignment: go.GridLayout.Position,
-                        comparer: function(a, b) { // can re-order tasks within a lane
-                            var ay = a.location.y;
-                            var by = b.location.y;
-                            if (isNaN(ay) || isNaN(by)) return 0;
-                            if (ay < by) return -1;
-                            if (ay > by) return 1;
-                            return 0;
-                        }
-                    }),
-                computesBoundsAfterDrag: true, // needed to prevent recomputing Group.placeholder bounds too soon
-                handlesDragDropForMembers: true, // don't need to define handlers on member Nodes and Links
-                mouseDragEnter: function(e, grp, prev) {
-                    highlightGroup(grp, true);
-                },
-                mouseDragLeave: function(e, grp, next) {
-                    highlightGroup(grp, false);
-                },
-                mouseDrop: function(e, grp) { // dropping a copy of some Nodes and Links onto this Group adds them to this Group
-                    // don't allow drag-and-dropping a mix of regular Nodes and Groups
-                    if (e.diagram.selection.all(function(n) {
-                            return !(n instanceof go.Group);
-                        })) {
-                        var ok = grp.addMembers(grp.diagram.selection, true);
-                        if (!ok) grp.diagram.currentTool.doCancel();
+            copyable: false,
+            movable: false,
+            deletable: false,
+            selectionAdorned: false,
+            selectionObjectName: "SHAPE", // even though its not selectable, this is used in the layout
+            layerName: "Background", // all lanes are always behind all nodes and links
+            layout: $(go.GridLayout, // automatically lay out the lane's subgraph
+                {
+                    wrappingColumn: 1,
+                    cellSize: new go.Size(1, 1),
+                    spacing: new go.Size(5, 5),
+                    alignment: go.GridLayout.Position,
+                    comparer: function (a, b) { // can re-order tasks within a lane
+                        var ay = a.location.y;
+                        var by = b.location.y;
+                        if (isNaN(ay) || isNaN(by)) return 0;
+                        if (ay < by) return -1;
+                        if (ay > by) return 1;
+                        return 0;
                     }
-                },
-                subGraphExpandedChanged: function(grp) {
-                    var shp = grp.selectionObject;
-                    if (grp.diagram.undoManager.isUndoingRedoing) return;
-                    if (grp.isSubGraphExpanded) {
-                        shp.width = grp._savedBreadth;
-                    } else {
-                        grp._savedBreadth = shp.width;
-                        shp.width = NaN;
-                    }
+                }),
+            computesBoundsAfterDrag: true, // needed to prevent recomputing Group.placeholder bounds too soon
+            handlesDragDropForMembers: true, // don't need to define handlers on member Nodes and Links
+            mouseDragEnter: function (e, grp, prev) {
+                highlightGroup(grp, true);
+            },
+            mouseDragLeave: function (e, grp, next) {
+                highlightGroup(grp, false);
+            },
+            mouseDrop: function (e, grp) { // dropping a copy of some Nodes and Links onto this Group adds them to this Group
+                // don't allow drag-and-dropping a mix of regular Nodes and Groups
+                if (e.diagram.selection.all(function (n) {
+                    return !(n instanceof go.Group);
+                })) {
+                    var ok = grp.addMembers(grp.diagram.selection, true);
+                    if (!ok) grp.diagram.currentTool.doCancel();
                 }
             },
+            subGraphExpandedChanged: function (grp) {
+                var shp = grp.selectionObject;
+                if (grp.diagram.undoManager.isUndoingRedoing) return;
+                if (grp.isSubGraphExpanded) {
+                    shp.width = grp._savedBreadth;
+                } else {
+                    grp._savedBreadth = shp.width;
+                    shp.width = NaN;
+                }
+            }
+        },
             new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
             new go.Binding("isSubGraphExpanded", "expanded").makeTwoWay(),
             // the lane header consisting of a TextBlock and an expander button
             $(go.Panel, "Horizontal", {
-                    name: "HEADER",
-                    angle: 0, // maybe rotate the header to read sideways going up
-                    alignment: go.Spot.Left
-                },
+                name: "HEADER",
+                angle: 0, // maybe rotate the header to read sideways going up
+                alignment: go.Spot.Left
+            },
                 // $("SubGraphExpanderButton", {
                 //   margin: 5
                 // }), // this remains always visible
@@ -344,7 +346,7 @@ function init() {
                         stroke: null,
                         strokeWidth: 4
                     },
-                    new go.Binding("fill", "isHighlighted", function(h) {
+                    new go.Binding("fill", "isHighlighted", function (h) {
                         return h ? "#D6D6D6" : "#F1F1F1";
                     }).ofObject(),
                     new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(go.Size.stringify)),
@@ -361,7 +363,7 @@ function init() {
                         alignment: go.Spot.TopLeft,
                         margin: new go.Margin(4, 0, 0, 2)
                     },
-                    new go.Binding("visible", "isSubGraphExpanded", function(e) {
+                    new go.Binding("visible", "isSubGraphExpanded", function (e) {
                         return !e;
                     }).ofObject(),
                     new go.Binding("text", "text").makeTwoWay())
@@ -373,14 +375,14 @@ function init() {
         "key": "awleft",
         "text": "Always Execute Left",
         "isGroup": true,
-        "color": "0",
+        "color": blue,
         "size": laneSize//,
         //"loc": "0 23.52284749830794"
     }, {
         "key": "left",
         "text": "Left Only",
         "isGroup": true,
-        "color": "0",
+        "color": blue,
         "size": laneSize//,
         //"color": "#fff000",
         //"loc": "109 23.52284749830794"
@@ -389,24 +391,24 @@ function init() {
         "text": "Both Left and Right",
         "isGroup": true,
         "size": laneSize,
-        "color": "0"//,
+        "color": blue//,
         //"loc": "235 23.52284749830794"
     },
-        {
-            "key": "right",
-            "text": "Right Only",
-            "isGroup": true,
-            "color": "0",
-            "size": laneSize//,
-            //"loc": "562 23.52284749830794"
-        }, {
-            "key": "awright",
-            "text": "Always Execute Right",
-            "isGroup": true,
-            "color": "0",
-            "size": laneSize//,
-            //"loc": "671 23.52284749830794"
-        }
+    {
+        "key": "right",
+        "text": "Right Only",
+        "isGroup": true,
+        "color": blue,
+        "size": laneSize//,
+        //"loc": "562 23.52284749830794"
+    }, {
+        "key": "awright",
+        "text": "Always Execute Right",
+        "isGroup": true,
+        "color": blue,
+        "size": laneSize//,
+        //"loc": "671 23.52284749830794"
+    }
     ]);
 
     // initialize the left Palette
@@ -444,7 +446,7 @@ function init() {
         source: "cat3.png"
     }]);
 
-    load();
+
 
     // initialize the left Legend
     var rightLegend =
@@ -454,17 +456,17 @@ function init() {
 
     var table =
         $(go.Part, "Table", {
-                position: new go.Point(300, 10),
-                selectable: false
-            },
+            position: new go.Point(300, 10),
+            selectable: false
+        },
             $(go.TextBlock, "Key", {
                 row: 0,
                 font: font14
             }), // end row 0
             $(go.Panel, "Horizontal", {
-                    row: 1,
-                    alignment: go.Spot.Left
-                },
+                row: 1,
+                alignment: go.Spot.Left
+            },
                 $(go.Shape, "Rectangle", {
                     desiredSize: new go.Size(10, 10),
                     fill: '#CC293D',
@@ -475,9 +477,9 @@ function init() {
                 })
             ), // end row 1
             $(go.Panel, "Horizontal", {
-                    row: 2,
-                    alignment: go.Spot.Left
-                },
+                row: 2,
+                alignment: go.Spot.Left
+            },
                 $(go.Shape, "Rectangle", {
                     desiredSize: new go.Size(10, 10),
                     fill: '#FFD700',
@@ -488,9 +490,9 @@ function init() {
                 })
             ), // end row 2
             $(go.Panel, "Horizontal", {
-                    row: 3,
-                    alignment: go.Spot.Left
-                },
+                row: 3,
+                alignment: go.Spot.Left
+            },
                 $(go.Shape, "Rectangle", {
                     desiredSize: new go.Size(10, 10),
                     fill: '#009CCC',
@@ -505,6 +507,7 @@ function init() {
     // Set up a Part as a legend, and place it directly on the diagram
     // rightLegend.model = new go.GraphLinksModel(table);
 
+    // load();
 
 
 } // end init
