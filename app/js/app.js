@@ -10,6 +10,7 @@ var blue = '#81D4FA';
 var yellow = '#FFEB3B';
 var crud = '#fff000';
 var crap = '#000fff';
+var darkBlue = "#00008B";
 var laneSize = "150 300";
 var taskSize = "80 20";
 var font14 = "14px Arial, Helvetica, sans-serif";
@@ -375,14 +376,14 @@ function init() {
         "key": "awleft",
         "text": "Always Execute Left",
         "isGroup": true,
-        "color": blue,
+        "color": darkBlue,
         "size": laneSize//,
         //"loc": "0 23.52284749830794"
     }, {
         "key": "left",
         "text": "Left Only",
         "isGroup": true,
-        "color": blue,
+        "color": darkBlue,
         "size": laneSize//,
         //"color": "#fff000",
         //"loc": "109 23.52284749830794"
@@ -391,21 +392,21 @@ function init() {
         "text": "Both Left and Right",
         "isGroup": true,
         "size": laneSize,
-        "color": blue//,
+        "color": darkBlue//,
         //"loc": "235 23.52284749830794"
     },
     {
         "key": "right",
         "text": "Right Only",
         "isGroup": true,
-        "color": blue,
+        "color": darkBlue,
         "size": laneSize//,
         //"loc": "562 23.52284749830794"
     }, {
         "key": "awright",
         "text": "Always Execute Right",
         "isGroup": true,
-        "color": blue,
+        "color": darkBlue,
         "size": laneSize//,
         //"loc": "671 23.52284749830794"
     }
@@ -445,8 +446,6 @@ function init() {
         stroke: '#009CCC',
         source: "cat3.png"
     }]);
-
-
 
     // initialize the left Legend
     var rightLegend =
