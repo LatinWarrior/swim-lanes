@@ -423,28 +423,31 @@ function init() {
     // specify the contents of the Palette
     leftPalette.model = new go.GraphLinksModel([{
         key: "pp",
-        text: "PP Rename...",
+        text: "PP...",
         color: "0",
         size: taskSize,
         type: "PP",
         stroke: '#009CCC',
-        source: "cat1.png"
+        source: "cat1.png",
+        index: "-1"
     }, {
         key: "tt",
-        text: "TT Rename...",
+        text: "TT...",
         color: "1",
         size: taskSize,
         type: "TT",
         stroke: '#009CCC',
-        source: "cat2.png"
+        source: "cat2.png",
+        "index": "-1"
     }, {
         key: "sc",
-        text: "Scan Rename...",
+        text: "Scan...",
         color: "2",
         size: taskSize,
         type: "SC",
         stroke: '#009CCC',
-        source: "cat3.png"
+        source: "cat3.png",
+        index: "-1"
     }]);
 
     // initialize the left Legend
@@ -504,7 +507,7 @@ function init() {
         );
 
     // Set up a Part as a legend, and place it directly on the diagram
-    // rightLegend.model = new go.GraphLinksModel(table);
+    rightLegend.model = new go.GraphLinksModel(table);
 
     // load();
 
