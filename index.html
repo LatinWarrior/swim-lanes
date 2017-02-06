@@ -6,6 +6,7 @@
     <meta name="description" />
     <meta charset="UTF-8">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="app/css/dataInspector.css">
 
     <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 </head>
@@ -17,7 +18,9 @@
     <div class="row">
         <div id="leftPalette" class="col-md-2" style="border: solid 1px black; height: 400px"></div>
         <div id="centerDiagram" class="col-md-9" style="border: solid 1px black; height: 400px"></div>
-        <div id="rightLegend" class="col-md-1" style="border: solid 1px black; height: 400px"></div>
+        <div id="rightLegend" class="col-md-1" style="border: solid 1px black; height: 400px">
+            <div id="myNodeInspector" class="inspector"></div>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -27,7 +30,9 @@
         </div>
     </div>
 </div>
+
 <script src="node_modules/gojs/release/go-debug.js"></script>
+<!--<script src="app/js/dataInspector.js"></script>-->
 <script src="node_modules/jquery/dist/jquery.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 <script src="node_modules/angular/angular.js"></script>

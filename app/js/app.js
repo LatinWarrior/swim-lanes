@@ -19,10 +19,10 @@ var font15 = "15px Arial, Helvetica, sans-serif";
 // some shared functions
 
 // This function provides a common style for most of the TextBlocks.
-    // Some of these values may be overridden in a particular TextBlock.
-    function textStyle() {
-      return { font: font14, stroke: "white" };
-    }
+// Some of these values may be overridden in a particular TextBlock.
+function textStyle() {
+    return { font: font14, stroke: "white" };
+}
 
 // this is called after nodes have been moved
 function relayoutDiagram() {
@@ -213,7 +213,7 @@ function init() {
                     fill: "white",
                     stroke: '#CCCCCC'
                 }),
-                $(go.Panel, "Table", 
+                $(go.Panel, "Table",
                     {
                         width: 120,
                         minSize: new go.Size(NaN, 50),
@@ -221,25 +221,25 @@ function init() {
                         defaultAlignment: go.Spot.Left
                     },
                     $(go.RowColumnDefinition, { column: 2, width: 4 }
-                ),                
-                $(go.TextBlock, 
-                    {
-                        row: 0, 
-                        column: 0,
-                        name: 'TEXT',
-                        margin: 6,
-                        font: font14,
-                        editable: true,
-                        stroke: "#000",
-                        maxSize: new go.Size(130, NaN),
-                        alignment: go.Spot.TopLeft
-                    },
-                    new go.Binding("text", "text").makeTwoWay())
+                    ),
+                    $(go.TextBlock,
+                        {
+                            row: 0,
+                            column: 0,
+                            name: 'TEXT',
+                            margin: 6,
+                            font: font14,
+                            editable: true,
+                            stroke: "#000",
+                            maxSize: new go.Size(130, NaN),
+                            alignment: go.Spot.TopLeft
+                        },
+                        new go.Binding("text", "text").makeTwoWay())
                 ),
                 $(go.TextBlock, textStyle(),  // the name
                     {
-                        row: 1, 
-                        column: 0, 
+                        row: 1,
+                        column: 0,
                         columnSpan: 5,
                         font: font14,
                         editable: true, isMultiline: false,
@@ -247,19 +247,19 @@ function init() {
                     },
                     new go.Binding("text", "name").makeTwoWay()
                 ),
-               $(go.TextBlock, textStyle(),
-                    { 
-                        row: 2, 
-                        column: 0 
+                $(go.TextBlock, textStyle(),
+                    {
+                        row: 2,
+                        column: 0
                     },
-                    new go.Binding("text", "key", function(v) {return "id: " + v;})
+                    new go.Binding("text", "key", function (v) { return "id: " + v; })
                 ),
                 $(go.TextBlock, textStyle(),
-                    { 
-                        row: 3, 
-                        column: 0 
+                    {
+                        row: 3,
+                        column: 0
                     },
-                    new go.Binding("text", "index", function(v) {return "index: " + v;})
+                    new go.Binding("text", "index", function (v) { return "index: " + v; })
                 )
             )
         );
@@ -318,6 +318,7 @@ function init() {
                     spacing: new go.Size(5, 5),
                     alignment: go.GridLayout.Position,
                     comparer: function (a, b) { // can re-order tasks within a lane
+                        // console.log('In comparer');
                         var ay = a.location.y;
                         var by = b.location.y;
                         if (isNaN(ay) || isNaN(by)) return 0;
@@ -336,6 +337,9 @@ function init() {
             },
             mouseDrop: function (e, grp) { // dropping a copy of some Nodes and Links onto this Group adds them to this Group
                 // don't allow drag-and-dropping a mix of regular Nodes and Groups
+                var diagram = grp.diagram;
+                var selGroup = diagram.selection.first();  // assume just one Node in selection
+                // console.log('In mouseDrop. selGroup: ', selGroup);
                 if (e.diagram.selection.all(function (n) {
                     return !(n instanceof go.Group);
                 })) {
@@ -553,6 +557,21 @@ function init() {
 
     // load();
 
+    // select a Node, so that the first Inspector shows something
+    // myDiagram.select(myDiagram.nodes.first());
+
+    // support editing the properties of the selected person in HTML
+    if (window.Inspector) {
+        var nodeInspector = new Inspector('myNodeInspector', myDiagram,
+            {
+                properties: {
+                    'name': { show: Inspector.showIfPresent },
+                    'key': { readOnly: true, show: Inspector.showIfPresent },
+                    'index': { readOnly: true, show: Inspector.showIfPresent },
+                    'text': { show: Inspector.showIfPresent }
+                }
+            });
+    }
 
 } // end init
 
